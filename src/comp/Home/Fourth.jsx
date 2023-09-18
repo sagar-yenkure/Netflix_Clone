@@ -9,7 +9,7 @@ const Fourth = () => {
 
   return (
     <>
-<div className="conatiner bg-black border-b-8  border-gray-500 h-fit pt-10">
+<div className="conatiner bg-black border-b-8  border-[#2d2d2d] h-fit pt-10 p-20">
         <div className="playbox flex flex-col  md:flex-row justify-center mx-5 items-center">
           <div className="images__ w-fit ">
             <img className='p-4' src={kidimg} alt="" />
