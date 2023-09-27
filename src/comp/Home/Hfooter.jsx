@@ -3,7 +3,7 @@ import { LiaCaretDownSolid } from "react-icons/lia";
 import LangContext from "../../context/language/Context";
 import { useContext } from "react";
 
-const Footer = () => {
+const Hfooter = () => {
   const [lang, setlang] = useState("English");
   const [hide, sethide] = useState("hidden");
   const context = useContext(LangContext);
@@ -16,59 +16,59 @@ const Footer = () => {
     },
     {
       id: 2,
-      link: "Help center",
+      link: "सहायता केंद्र",
     },
     {
       id: 3,
-      link: "Account",
+      link: "अकाउंट",
     },
     {
       id: 4,
-      link: "Media Center",
+      link: "मीडिया केंद्र",
     },
     {
       id: 5,
-      link: "Investor Relations",
+      link: "इंवेस्टर संबंध",
     },
     {
       id: 6,
-      link: "Jobs",
+      link: "नौकरियां",
     },
     {
       id: 7,
-      link: "Ways to Watch",
+      link: "देखने के तरीके",
     },
     {
       id: 8,
-      link: "Terms of Use",
+      link: "उपयोग की शर्तें",
     },
     {
       id: 9,
-      link: "Privacy",
+      link: "प्रायवेसी",
     },
     {
       id: 10,
-      link: "Cookie Preferences",
+      link: "कुकी प्रेफ़रेंस",
     },
     {
       id: 11,
-      link: "Corprate Information",
+      link: "कॉरपोरेट जानकारी",
     },
     {
       id: 12,
-      link: "Contact Us",
+      link: "हमसे संपर्क करें",
     },
     {
       id: 13,
-      link: "Speed Test",
+      link: "स्पीड टेस्ट",
     },
     {
       id: 14,
-      link: "Legal Notices",
+      link: "कानूनी सूचनाएं",
     },
     {
       id: 15,
-      link: "Only on Netflix",
+      link: "सिर्फ़ Netflix पर",
     },
   ];
   //function to change the language to English
@@ -93,15 +93,16 @@ const Footer = () => {
   };
   return (
     <>
-      <div className="footer w-full h-full py-[5%] px-[12%]  flex flex-col justify-between bg-black">
+      <div className="footer w-full h-full py-[5rem] px-[12rem]  flex flex-col justify-between bg-black">
         {/* links section for foooter */}
         <div>
           <div className="flex space-x-1 py-3">
-            <h1 className="text-gray-400 "> Questions ? call</h1>
-            <h1 className="text-gray-400 underline">-000-800-919-1694</h1>
+            <h1 className="text-gray-400 ">कोई सवाल है?</h1>
+            <h1 className="text-gray-400 underline">000-800-919</h1>
+            <h1 className="text-gray-400 ">पर कॉल करें</h1>
           </div>
           <div className="imp__links"></div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-gray-400">
+          <div className="grid grid-cols-4 gap-2 text-gray-400">
             {links.map((link) => {
               return (
                 <p key={link.id} className=" p-1 underline ">
@@ -140,11 +141,11 @@ const Footer = () => {
               हिन्दी
             </button>
           </div>
-            <h1 className="text-gray-400 mt-5">Netflix India</h1>
+            <h1 className="text-gray-400 mt-5">Netflix भारत</h1>
         </div>
       </div>
     </>
   );
 };
 
-export default Footer;
+export default Hfooter;

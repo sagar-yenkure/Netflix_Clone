@@ -3,7 +3,7 @@ import { LiaCaretDownSolid } from "react-icons/lia";
 import { useState, useContext } from "react";
 import LangContext from "../../context/language/Context";
 import logo from "../../assets/logo.png";
-
+import { Link } from "react-router-dom";
 const Homescreen = () => {
   const context = useContext(LangContext);
   const { language, setlanguage } = context;
@@ -123,7 +123,9 @@ const Homescreen = () => {
               </form>
               <div className="flex justify-center md:mt-4">
                 <button className="rounded-md hover:bg-red-500 bg-red-600  text-white font-semibold w-[10rem] h-[58px]">
-                  {!language ? "Get Started" : "शुरू करे"}
+                  <Link to="/Movies">
+                    {!language ? "Get Started" : "शुरू करे"}
+                  </Link>
                 </button>
               </div>
             </div>
