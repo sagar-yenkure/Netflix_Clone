@@ -1,42 +1,48 @@
-import React, { useState, useEffect} from "react";
+import React, { useState } from "react";
 import Movieitem from "./Movieitem";
-import axios from "axios";
-// import Moviecontext from "../context/Movie/context";
-
+import {MdKeyboardArrowLeft , MdKeyboardArrowRight } from "react-icons/md";
 
 const Corosole = (props) => {
-  const{heading, URL}=props
-  // const context = useContext(Moviecontext)
-  // const {moviefetch, moviedata}=context
-  const [Movie, setMovie] = useState([])
+  const{heading, Moviesset ,Cid}=props
+  
+  const slidenext=()=>{
+    let slider =document.getElementById('slider'+Cid)
+    slider.scrollLeft=slider.scrollLeft + 1300
 
- 
-  useEffect(() => {
-    axios.get(URL).then((response)=>{
-      setMovie(response.data.results)
-    })
-  }, [URL]);
+  }
+const slideprev=()=>{
+  let slider =document.getElementById('slider'+Cid)
+  slider.scrollLeft=slider.scrollLeft - 1300
 
-  // console.log(Movie)
-
+}
   return (
     <>
-    <div className=" p-2 mt-5">
-      <h1 className=" text-xl text-black font-bold ">{heading}</h1>
+    <div className=" p-5 mt-5 ">
+      <h1 className=" text-2xl text-white font-bold ">{heading}</h1>
     </div>
-      <div className="w-full flex gap-2">
-        {Movie.map((data) => {
+    <div className="relative flex items-center group">
+      <MdKeyboardArrowLeft
+      onClick={slideprev}  className="bg-white rounded-full absolute z-10 opacity-50 hover:opacity-75 hidden hover:cursor-pointer group-hover:block " size={50}/>
+
+      <div 
+      id={'slider'+ Cid} className=" scrollbar-hide w-full h-full gap-4 flex overflow-x-scroll  scroll-smooth ">
+        {Moviesset.map((data) => {
           return (
             <Movieitem
-              key={data.id}
-              img={data.backdrop_path
-              }
-              title={data.title}
-              release_date={data.release_date}
+            key={data.id}
+            img={data.backdrop_path
+            }
+            first_air_date={data.first_air_date}
+            original_name={data.original_name}
+            title={data.title}
+            release_date={data.release_date}
             />
-          );
-        })}
+            );
+          })}
       </div>
+          <MdKeyboardArrowRight
+          onClick={slidenext} className="items-end hover:cursor-pointer bg-white rounded-full right-0 absolute z-10 opacity-50 hover:opacity-75 hidden group-hover:block " size={50}/>
+    </div>
     </>
   );
 };

@@ -19,37 +19,10 @@ const Header = () => {
               </ul>
             </div>
           </div>
-          <div className="progile__ pt-3 flex space-x-3">
-            <div className="relative flex">
-              <input
-              onChange={onchange}
-                className="flex border border-slate-300 bg-transparent px-3 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 h-auto rounded-none py-1.5 pl-8 text-sm transition-all dark:placeholder:text-slate-300 dark:focus:ring-offset-0 w-0 border-none"
-                id="query"
-                placeholder="Search..."
-                type="text"
-                value=""
-              />
-              <button
-                className="inline-flex items-center justify-center text-sm font-medium ring-offset-slate-900 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 active:scale-95 disabled:pointer-events-none disabled:opacity-50 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 bg-transparent text-slate-100 hover:text-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:text-slate-100 dark:data-[state=open]:bg-transparent absolute top-1/2 h-auto -translate-y-1/2 rounded-full p-1 hover:bg-transparent dark:hover:bg-transparent left-[9px]"
-                aria-label="Search"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-slate-50 transition-opacity hover:opacity-75 active:scale-95 h-5 w-5"
-                  aria-hidden="true"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
-                </svg>
-              </button>
+          <div className="progile__ pt-3 flex space-x-3 ">
+            <div className="relative flex space-x-10">
+            
+              
             </div>
             <button
               className="items-center justify-center text-sm font-medium ring-offset-slate-900 transition-colors focus:outline-none  active:scale-95 disabled:pointer-events-none disabled:opacity-50 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 bg-transparent text-slate-100 hover:text-slate-100 data-[state=open]:bg-transparent dark:text-slate-100 dark:hover:text-slate-100 dark:data-[state=open]:bg-transparent hidden h-auto rounded-full p-1 hover:bg-transparent dark:hover:bg-transparent lg:flex"
