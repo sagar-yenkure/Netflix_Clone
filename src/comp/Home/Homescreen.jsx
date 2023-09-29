@@ -6,6 +6,7 @@ import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 const Homescreen = () => {
   const context = useContext(LangContext);
+  const User =null
   const { language, setlanguage } = context;
   const [lang, setlang] = useState("English");
   const [hide, sethide] = useState("hidden");
@@ -83,7 +84,9 @@ const Homescreen = () => {
                 </div>
                 <div className="mt-6 md:mt-8 ">
                   <button className="rounded-md bg-red-600  px-4 sign__up text-white font-semibold py-[5px]">
+                    <Link to="/Signup">
                     {!language ? "sign In" : "साइन इन करें"}
+                    </Link>
                   </button>
                 </div>
               </div>
@@ -123,9 +126,9 @@ const Homescreen = () => {
               </form>
               <div className="flex justify-center md:mt-4">
                 <button className="rounded-md hover:bg-red-500 bg-red-600  text-white font-semibold w-[10rem] h-[58px]">
-                  <Link to="/Movies">
-                    {!language ? "Get Started" : "शुरू करे"}
-                  </Link>
+                {!User?<Link to="/Movies">{!language ? "Get Started" : "शुरू करे"}</Link>:
+                  <Link to="/Login">{!language ? "Get Started" : "शुरू करे"}</Link>
+                  }
                 </button>
               </div>
             </div>

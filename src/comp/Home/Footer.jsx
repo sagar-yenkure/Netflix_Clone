@@ -3,7 +3,7 @@ import { LiaCaretDownSolid } from "react-icons/lia";
 import LangContext from "../../context/language/Context";
 import { useContext } from "react";
 
-const Footer = () => {
+const Footer = (props) => {
   const [lang, setlang] = useState("English");
   const [hide, sethide] = useState("hidden");
   const context = useContext(LangContext);
@@ -93,7 +93,7 @@ const Footer = () => {
   };
   return (
     <>
-      <div className="footer w-full h-full py-[5%] px-[12%]  flex flex-col justify-between bg-black">
+      <div className={`footer w-full h-full py-[5%] px-[12%]  flex flex-col justify-between bg-black `}>
         {/* links section for foooter */}
         <div>
           <div className="flex space-x-1 py-3">

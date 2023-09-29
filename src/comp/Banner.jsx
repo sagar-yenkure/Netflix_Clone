@@ -27,8 +27,7 @@ moviefetch()
             <button className="border border-gray-200 py-2 px-5 bg-gray-300 text-black">Play</button>
             <button className="border border-gray-200 py-2 px-5 bg-black text-white">Watch Later</button>
             <p className=" pt-4 text-gray-500">released on {poster?.release_date}</p>
-            <p className="pt-2 font-semibold">{poster?.overview.slice(0,250)}...</p>
-
+            <p className="pt-2 font-semibold pr-[10%] md:pr-[50%]">{poster?.overview.slice(0,250)}...</p>
 
           </div>
         </div>
