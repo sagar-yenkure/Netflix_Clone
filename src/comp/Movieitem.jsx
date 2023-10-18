@@ -29,7 +29,9 @@ const Movieitem = (props) => {
             src={`https://image.tmdb.org/t/p/w500/${img}`}
             alt=""
           />
+        /
         </div>
+      
         <div className=" headings flex flex-col justify-center items-center absolute top-[0]  left-0 transition-all ease-in h-full w-full hover:bg-black/80 opacity-0 hover:opacity-100 ">
           <h1 className="  text-white text-center text-3xl font-semibold ">
             {!title ? original_name : title}

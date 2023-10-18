@@ -4,8 +4,10 @@ import logo from "../assets/logo.png";
 import { useState } from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import {useNavigate} from "react-router-dom"
 
 const Signup = () => {
+  const navigate = useNavigate(); 
   const [show, setshow] = useState(true);
   const [cheack, setcheack] = useState(true);
 
@@ -85,7 +87,7 @@ const Signup = () => {
               {/* new to netflix section  */}
               <div className="flex p-1 space-x-1">
                 <p className="py-3 text-gray-400">New to Netflix?</p>
-                <button className="font-semibold text-white">Sign Up now</button>
+                <button onClick={()=>navigate("/login")} className="font-semibold text-white">Sign Up now</button>
               </div>
               <div className="text-sm">
                 <p className="text-gray-400">
