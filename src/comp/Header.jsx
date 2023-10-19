@@ -1,8 +1,16 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import profile from "../assets/profile.png";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate=useNavigate()
+  const logout=()=>{
+    localStorage.removeItem('token')
+    navigate('/')
+
+
+  }
   return (
     <>
       <div className="header w-full h-fit bg-transparent px-[5%] z-[100] absolute">
@@ -19,7 +27,7 @@ const Header = () => {
               </ul>
             </div>
           </div>
-          <div className="progile__ pt-3 flex space-x-3 ">
+          <div className="progil  flex space-x-3 ">
             <div className="relative flex space-x-10">
             
               
@@ -48,6 +56,9 @@ const Header = () => {
             <button>
               <img className="w-[2rem]" src={profile} alt="" />
             </button>
+            <button onClick={logout} className="rounded-md px-1 sign__up text-red-600 font-semibold py-[1px]">
+                    log out
+                  </button>
           </div>
         </div>
       </div>

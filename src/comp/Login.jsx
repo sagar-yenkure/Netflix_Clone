@@ -1,15 +1,50 @@
 import React from "react";
 import Footer from "./Home/Footer";
 import logo from "../assets/logo.png";
-import { useState } from "react";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { useState ,useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import LangContext from "../context/language/Context";
 
 const Login = () => {
+  const host = "http://localhost:5000";
   const navigate = useNavigate();
   const [show, setshow] = useState(true);
+  const [errorbox, seterrorbox] = useState("")
   const [cheack, setcheack] = useState(true);
+  const [credentials, setcredentials] = useState({email:"",password:""})
+
+  const onchange=(e)=>{
+    setcredentials({
+      ...credentials,
+      [e.target.name]:e.target.value
+    })
+  }
+  const handlesubmit=async(e)=>{
+    e.preventDefault();
+    const responce = await fetch(`${host}/api/auth/createuser`, {
+      method: 'post',
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ email: credentials.email, password: credentials.password }),
+    });
+    const json = await responce.json();
+    if (json.success) {
+      console.log(json);
+      localStorage.setItem("token",json.token)
+      navigate('/Signup')
+  
+    } else {
+      seterrorbox(json.error)
+      setTimeout(() => {
+        seterrorbox("")
+        
+      }, 5000);
+    
+    }
+
+  }
+
 
   const handleshow = () => {
     if (show) {
@@ -36,6 +71,7 @@ const Login = () => {
         <div className="bg w-full h-full  flex flex-col items-center  bg-[rgba(0,0,0,0.7)] border-b border-gray-600 pb-[20%] ">
           <div className=" boxxx w-full lg:w-[30%] h-[70%] lg:h-screen bg-black lg:bg-[rgba(0,0,0,0.7)]">
             <div className=" main box__ p-5 lg:p-[15%]">
+              <h1 className="text-white font-bold text-xl">{errorbox}</h1>
               <h1 className=" text-white font-bold text-3xl">
                 Create an Account
               </h1>
@@ -45,7 +81,8 @@ const Login = () => {
                   className=" p-4 bg-gray rounded-md text bg-[#333333] text-white lg:w-full h-fit"
                   type="email"
                   name="email"
-                  id="email"
+                  value={credentials.email}
+                  onChange={onchange}
                   placeholder="Email or Phone Number"
                   required
                 />
@@ -55,9 +92,10 @@ const Login = () => {
                 <input
                   className="  p-4 bg-gray text-white rounded-md text bg-[#333333]  lg:w-full h-fit"
                   type={show ? "Password" : "text"}
-                  name="email"
-                  id="pass"
+                  name="password"
                   placeholder="Password"
+                  value={credentials.password}
+                  onChange={onchange}
                   required
                 />
 
@@ -71,7 +109,7 @@ const Login = () => {
               </div>
 
               {/* sign in button  */}
-              <div className=" bg-[#e50914] mt-[10%] text-center w-full rounded-md py-4 h-full  ">
+              <div onClick={handlesubmit} className=" bg-[#e50914] mt-[10%] text-center w-full rounded-md py-4 h-full  ">
                 <button className="text-center text-white font-bold  ">
                   Sign Up
                 </button>

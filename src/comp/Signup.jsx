@@ -6,16 +6,57 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import {useNavigate} from "react-router-dom"
 
+
 const Signup = () => {
+  const host = "http://localhost:5000";
+
   const navigate = useNavigate(); 
+  const [info, setinfo] = useState({
+    email:"",
+    password:""
+  })
   const [show, setshow] = useState(true);
   const [cheack, setcheack] = useState(true);
+  const [errorbox, seterrorbox] = useState("")
+
+
+const onchange=(e)=>{
+  setinfo({
+    ...info,
+    [e.target.name]:e.target.value
+  })
+}
+const handlesumbit=async(e)=>{
+  e.preventDefault();
+  const responce=await fetch(`${host}/api/auth/login`,{
+    method:'post',
+    headers:{
+      'content-type':'application/json'
+    },
+    body:JSON.stringify({email:info.email,password:info.password})
+  });
+  const json = await responce.json()
+  if(json.sucess){
+    console.log(json)
+    navigate('/movies')
+  }
+  else{
+    seterrorbox(json.error)
+  }
+  setTimeout(() => {
+    seterrorbox("")
+    
+  }, 5000);
+
+
+}
 
   const handleshow = () => {
     if (show) {
       setshow(false);
     } else if (!show) {
       setshow(true);
+      
     }
   };
   const handlecheck = () => {
@@ -36,6 +77,7 @@ const Signup = () => {
         <div className="bg w-full h-full  flex flex-col items-center  bg-[rgba(0,0,0,0.7)] border-b border-gray-600 pb-[20%]">
           <div className=" boxxx w-full lg:w-[30%] h-[70%] lg:h-screen bg-black lg:bg-[rgba(0,0,0,0.7)]">
             <div className=" main box__ p-5 lg:p-[15%]">
+            <h1 className="text-white font-bold text-xl">{errorbox}</h1>
               <h1 className=" text-white font-bold text-3xl">Sign In</h1>
               {/* text filed for Email */}
               <div className=" pt-[5%] w-full  py-4 flex flex-col lg:flex-row h-full  ">
@@ -44,6 +86,9 @@ const Signup = () => {
                   type="email"
                   name="email"
                   id="email"
+                  value={info.email}
+                  onChange={onchange}
+
                   placeholder="Email or Phone Number"
                   required
                 />
@@ -53,9 +98,11 @@ const Signup = () => {
                 <input
                   className="  p-4 bg-gray text-white rounded-md text bg-[#333333]  lg:w-full h-fit"
                   type={show ? "Password" : "text"}
-                  name="email"
+                  name="password"
                   id="pass"
                   placeholder="Password"
+                  value={info.password}
+                  onChange={onchange}
                   required
                 />
 
@@ -69,7 +116,7 @@ const Signup = () => {
               </div>
 
               {/* sign in button  */}
-              <div className=" bg-[#e50914] mt-[10%] text-center w-full rounded-md py-4 h-full  ">
+              <div onClick={handlesumbit} className=" bg-[#e50914] mt-[10%] text-center w-full rounded-md py-4 h-full  ">
                 <button className="text-center text-white font-bold  ">
                   Sign In
                 </button>

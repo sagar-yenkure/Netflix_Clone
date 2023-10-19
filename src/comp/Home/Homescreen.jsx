@@ -126,7 +126,7 @@ const Homescreen = () => {
               </form>
               <div className="flex justify-center md:mt-4">
                 <button className="rounded-md hover:bg-red-500 bg-red-600  text-white font-semibold w-[10rem] h-[58px]">
-                {!User?<Link to="/Movies">{!language ? "Get Started" : "शुरू करे"}</Link>:
+                {!User?<Link to="/login">{!language ? "Get Started" : "शुरू करे"}</Link>:
                   <Link to="/Login">{!language ? "Get Started" : "शुरू करे"}</Link>
                   }
                 </button>
