@@ -8,17 +8,15 @@ const Header = () => {
   const logout=()=>{
     localStorage.removeItem('token')
     navigate('/')
-
-
   }
   return (
     <>
-      <div className="header w-full h-fit bg-transparent px-[5%] z-[100] absolute">
+      <div className="header w-full h-fit bg-transparent px-[5%]">
         <div className="nav flex justify-between">
           <div className="logo flex">
-            <img className="w-[8rem]" src={logo} alt="Netflix" />
+            <img className="w-[6rem]" src={logo} alt="Netflix" />
             <div className="nav">
-              <ul className=" hidden  p-6 lg:flex text-white space-x-4">
+              <ul className=" hidden  p-4 lg:flex text-white space-x-4">
                 <li>Home</li>
                 <li>Tv Shows</li>
                 <li>Movies</li>

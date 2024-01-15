@@ -1,20 +1,23 @@
 import React from "react";
 import { useState } from "react";
 import Moviecontext from "./context";
-import requests from "../../comp/Requests";
+import requests from "../../constant/Requests";
 import axios from "axios";
 
 const Movie = (props) => {
   const [moviedata, setmoviedata] = useState([]);
+  const [poster, setposter] = useState([{}]);
   const [topmovie, settopmovie] = useState([]);
   const [trendingmovie, settrendingmovie] = useState([]);
   const [horrormovie, sethorrormovie] = useState([]);
   const [upmovies, setupmovies] = useState([]);
-
-  setInterval(() => {
-    return poster = moviedata[Math.floor(Math.random() *1+1 )];
   
-  }, 3000);1
+  const defaultPoster = moviedata[Math.floor(Math.random() * 1)];
+
+
+  const showmovieinfo = (data) => {
+    setposter(data);
+  };
 
   const moviefetch = async () => {
     try {
@@ -29,14 +32,15 @@ const Movie = (props) => {
       await axios.get(requests.Trending).then((response) => {
         settrendingmovie(response.data.results);
       });
-
+      
       await axios.get(requests.Horror).then((response) => {
         sethorrormovie(response.data.results);
       });
-
+      
       await axios.get(requests.Series).then((response) => {
         setupmovies(response.data.results);
       });
+      setposter(defaultPoster)
     } catch (error) {
       console.log(error);
     }
@@ -49,10 +53,13 @@ const Movie = (props) => {
         setmoviedata,
         moviefetch,
         poster,
+        setposter,
         topmovie,
         trendingmovie,
         horrormovie,
         upmovies,
+        showmovieinfo,
+        defaultPoster,
       }}
     >
       {props.children}
