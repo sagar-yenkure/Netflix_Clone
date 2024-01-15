@@ -11,33 +11,49 @@ const Movie = (props) => {
   const [horrormovie, sethorrormovie] = useState([]);
   const [upmovies, setupmovies] = useState([]);
 
-  const poster = moviedata[Math.floor(Math.random() * moviedata.length)];
+  setInterval(() => {
+    return poster = moviedata[Math.floor(Math.random() *1+1 )];
+  
+  }, 3000);1
 
   const moviefetch = async () => {
-    await axios.get(requests.Popular).then((response) => {
-      setmoviedata(response.data.results);
-    });
+    try {
+      await axios.get(requests.Popular).then((response) => {
+        setmoviedata(response.data.results);
+      });
 
-    await axios.get(requests.Top).then((response) => {
-      settopmovie(response.data.results);
-    });
+      await axios.get(requests.Top).then((response) => {
+        settopmovie(response.data.results);
+      });
 
-    await axios.get(requests.Trending).then((response) => {
-      settrendingmovie(response.data.results);
-    });
+      await axios.get(requests.Trending).then((response) => {
+        settrendingmovie(response.data.results);
+      });
 
-    await axios.get(requests.Horror).then((response) => {
-      sethorrormovie(response.data.results);
-    });
+      await axios.get(requests.Horror).then((response) => {
+        sethorrormovie(response.data.results);
+      });
 
-    await axios.get(requests.Series).then((response) => {
-      setupmovies(response.data.results);
-    });
+      await axios.get(requests.Series).then((response) => {
+        setupmovies(response.data.results);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <Moviecontext.Provider
-      value={{ moviedata, setmoviedata, moviefetch, poster ,topmovie,trendingmovie,horrormovie,upmovies }}
+      value={{
+        moviedata,
+        setmoviedata,
+        moviefetch,
+        poster,
+        topmovie,
+        trendingmovie,
+        horrormovie,
+        upmovies,
+      }}
     >
       {props.children}
     </Moviecontext.Provider>
