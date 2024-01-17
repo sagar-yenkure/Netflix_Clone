@@ -1,30 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import Header from "./Header";
 import Moviecontext from "../context/Movie/context";
-import { TbRating18Plus, TbRating12Plus } from "react-icons/tb";
+import { CiBookmark } from "react-icons/ci";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
+import { FaCheck } from "react-icons/fa";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { addliked } from "@/redux/slices/Likedmovies";
 
 const Banner = () => {
+  const Dispatch = useDispatch();
+  const { toast } = useToast();
   const context = useContext(Moviecontext);
   const { moviefetch, setposter, poster, defaultPoster } = context;
+  const [isliked, setisliked] = useState(false);
 
   useEffect(() => {
     moviefetch();
     setposter(defaultPoster);
   }, []);
 
+  useEffect(() => {
+    setisliked(false);
+  }, [poster]);
+
   return (
     <>
       <Header />
 
-      <div className="w-full h-[550px]  text-white bg-transparent  from-black">
+      <div className="w-full h-[550px]  text-white  from-black">
         <div className="w-full absolute  h-[550px] ">
           <img
-            className="w-full h-full object-cover "
+            className="w-full h-full object-cover"
             src={`https://image.tmdb.org/t/p/original/${poster?.backdrop_path}`}
             alt={poster?.title}
           />
-          <div className=" text-left absolute w-full flex top-[10%] p-4 lg:p-8 space-x-5">
+          <div className=" text-left absolute w-full flex top-[5%] p-4 lg:p-8 space-x-5">
             <div>
               <img
                 className="w-[25rem] md:h-[26rem] rounded-md "
@@ -32,20 +45,53 @@ const Banner = () => {
                 alt={poster?.title}
               />
             </div>
-            {/* //the overview of movie */}
-            <div>
+
+            <div className=" mt-10">
               <h1 className=" text-3xl lg:text-5xl my-3 font-bold">
                 {poster?.title}
               </h1>
-              <button className="border border-gray-200 py-2 px-5 bg-gray-300 text-black">
-                Play
-              </button>
-              <button className="border border-gray-200 py-2 px-5 bg-black text-white">
-                Watch Later
-              </button>
-          
+              <div className=" flex space-x-3">
+                <button className=" rounded-lg py-2 font-bold px-5 bg-gray-300 text-black">
+                  Play
+                </button>
+                <button className=" py-2 rounded-lg px-5 bg-black text-white">
+                  Watch Trailer
+                </button>
 
-            {/* the  overview of  movie */}
+                <span
+                  title="Add to favourite"
+                  className=" bg-black rounded-full w-12 h-12 flex justify-center items-center"
+                >
+                  <button
+                    variant="outline"
+                    onClick={() => {
+                      setisliked(!isliked);
+                      if (!isliked) {
+                        toast({
+                          description: `${poster?.title} added to mylist`,
+                        });
+                        Dispatch(addliked(poster));
+                      }
+                    }}
+                  >
+                    {!isliked ? (
+                      <IoMdHeartEmpty size={20} />
+                    ) : (
+                      <FaCheck size={20} />
+                    )}
+                  </button>
+                </span>
+                <span
+                  title="Add to Bookmark"
+                  className="bg-black rounded-full w-12 h-12 flex justify-center items-center"
+                >
+                  <button>
+                    <CiBookmark size={20} />
+                  </button>
+                </span>
+              </div>
+
+              {/* the  overview of  movie */}
               <div className=" flex space-x-4 font-bold mt-5">
                 <p className="  text-white">
                   {poster ? poster.release_date : ""} ‧{" "}
@@ -59,10 +105,9 @@ const Banner = () => {
                 {poster?.overview}
               </p>
             </div>
-            
-           
           </div>
         </div>
+        <Toaster />
       </div>
     </>
   );

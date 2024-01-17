@@ -39,7 +39,7 @@ const Homescreen = () => {
       <div
         className={
           !language
-            ? "home__screen bg-home bg-cover bg-center   w-full h-screen  bg-slate-400 border-b-8 border-[#2d2d2d]"
+            ? "home__screen bg-home bg-cover bg-center  w-full h-screen  bg-slate-400 border-b-8 border-[#2d2d2d]"
             : "home__screen bg-hindihome bg-cover bg-center  w-full h-screen border-b-8 border-gray-500"
         }
       >

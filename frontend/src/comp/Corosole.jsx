@@ -28,7 +28,7 @@ const Corosole = (props) => {
 
         <div
           id={"slider" + Cid}
-          className=" scrollbar-hide w-full h-full gap-4 flex overflow-x-scroll  scroll-smooth "
+          className=" scrollbar-hide w-full h-full gap-4 flex overflow-x-scroll scroll-smooth "
         >
           {Moviesset.map((data) => {
             return (

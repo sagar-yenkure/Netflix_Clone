@@ -15,9 +15,7 @@ const Movieitem = (props) => {
     <>
       <button
         onClick={() => {
-          showmovieinfo(data);
-          // console.log(data)
-          
+          showmovieinfo(data);          
         }}
       >
         <div key={id} className=" hover:cursor-pointer h-fit w-fit rounded-lg">

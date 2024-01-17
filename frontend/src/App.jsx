@@ -10,7 +10,7 @@ import Login from "./comp/Login";
 import Signup from "./comp/Signup";
 
 function App() {
-  const User=null
+  
   return (
     <LangContext>
     <Moviecontext>
