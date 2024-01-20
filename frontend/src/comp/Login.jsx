@@ -1,50 +1,46 @@
 import React from "react";
 import Footer from "./Home/Footer";
 import logo from "../assets/logo.png";
-import { useState ,useContext } from "react";
+import { useState } from "react";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useNavigate } from "react-router-dom";
-import LangContext from "../context/language/Context";
+import { app } from "../Auth/Firebase";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 
-const Login = () => {
-  const host = "http://localhost:5000";
+const Signup = () => {
+  const { toast } = useToast();
+  const auth = getAuth(app);
   const navigate = useNavigate();
+  const [info, setinfo] = useState({
+    email: "",
+    password: "",
+  });
   const [show, setshow] = useState(true);
-  const [errorbox, seterrorbox] = useState("")
   const [cheack, setcheack] = useState(true);
-  const [credentials, setcredentials] = useState({email:"",password:""})
 
-  const onchange=(e)=>{
-    setcredentials({
-      ...credentials,
-      [e.target.name]:e.target.value
-    })
-  }
-  const handlesubmit=async(e)=>{
-    e.preventDefault();
-    const responce = await fetch(`${host}/api/auth/createuser`, {
-      method: 'post',
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ email: credentials.email, password: credentials.password }),
+  const onchange = (e) => {
+    setinfo({
+      ...info,
+      [e.target.name]: e.target.value,
     });
-    const json = await responce.json();
-    if (json.success) {
-      console.log(json);
-      localStorage.setItem("token",json.token)
-      navigate('/Signup')
-  
-    } else {
-      seterrorbox(json.error)
-      setTimeout(() => {
-        seterrorbox("")
-        
-      }, 5000);
-    
-    }
-
-  }
-
+  };
+  //handle for login
+  const handlesumbit = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, info.email, info.password)
+      .then((res) => {
+        navigate("/Movies");
+      })
+      .catch((err) => {
+        toast({
+          variant: "destructive",
+          description: err.code,
+        });
+      });
+  };
 
   const handleshow = () => {
     if (show) {
@@ -62,39 +58,38 @@ const Login = () => {
   };
   return (
     <>
-      <div className=" relative home__screen bg-black lg:bg-home bg-fit bg-cover  w-full h-fit lg:h-screen">
-        <div className="bg-[rgba(0,0,0,0.7)]  pl-2 lg:pl-5 py-5">
+      <main className=" relative home__screen bg-black lg:bg-home bg-fit bg-cover  w-full h-fit lg:h-screen ">
+        <section className="bg-[rgba(0,0,0,0.7)]  pl-2 lg:pl-5">
           {/* netflix logo  */}
           <img className=" w-[6rem] lg:w-[12rem]  " src={logo} alt="logo" />
-        </div>
+        </section>
 
-        <div className="bg w-full h-full  flex flex-col items-center  bg-[rgba(0,0,0,0.7)] border-b border-gray-600 pb-[20%] ">
+        <section className="bg w-full h-full  flex flex-col items-center  bg-[rgba(0,0,0,0.7)] border-b border-gray-600 pb-[20%]">
           <div className=" boxxx w-full lg:w-[30%] h-[70%] lg:h-screen bg-black lg:bg-[rgba(0,0,0,0.7)]">
             <div className=" main box__ p-5 lg:p-[15%]">
-              <h1 className="text-white font-bold text-xl">{errorbox}</h1>
-              <h1 className=" text-white font-bold text-3xl">
-                Create an Account
-              </h1>
+              <h1 className=" text-white font-bold text-3xl">Sign In</h1>
               {/* text filed for Email */}
-              <div className=" pt-[5%] w-full  py-4 flex flex-col lg:flex-row h-full  ">
+              <section className=" pt-[5%] w-full  py-4 flex flex-col lg:flex-row h-full  ">
                 <input
                   className=" p-4 bg-gray rounded-md text bg-[#333333] text-white lg:w-full h-fit"
                   type="email"
                   name="email"
-                  value={credentials.email}
+                  id="email"
+                  value={info.email}
                   onChange={onchange}
-                  placeholder="Email or Phone Number"
+                  placeholder="Email"
                   required
                 />
-              </div>
+              </section>
               {/* password input field */}
-              <div className=" relative  py-1 flex flex-col lg:flex-row h-full ">
+              <section className=" relative  py-1 flex flex-col lg:flex-row h-full ">
                 <input
                   className="  p-4 bg-gray text-white rounded-md text bg-[#333333]  lg:w-full h-fit"
                   type={show ? "Password" : "text"}
                   name="password"
+                  id="pass"
                   placeholder="Password"
-                  value={credentials.password}
+                  value={info.password}
                   onChange={onchange}
                   required
                 />
@@ -106,23 +101,35 @@ const Login = () => {
                 >
                   {show ? "Show" : "Hide"}
                 </button>
-              </div>
+              </section>
 
               {/* sign in button  */}
-              <div onClick={handlesubmit} className=" bg-[#e50914] mt-[10%] text-center w-full rounded-md py-4 h-full  ">
+              <div
+                onClick={handlesumbit}
+                className=" bg-[#e50914] mt-[10%] text-center w-full rounded-md py-4 h-full  "
+              >
                 <button className="text-center text-white font-bold  ">
-                  Sign Up
+                  Sign In
                 </button>
               </div>
-        
+              <div className="box text-gray-400 text-sm flex justify-between pt-3">
+                <div className="cheaked__box">
+                  <button onClick={handlecheck}>
+                    {cheack ? <CheckBoxOutlineBlankIcon /> : <CheckBoxIcon />}
+                  </button>
+                  Remember Me
+                </div>
+                <p className="needhelp__"></p>
+                need Help ?
+              </div>
               {/* new to netflix section  */}
               <div className="flex p-1 space-x-1">
-                <p className="py-3 text-gray-400">already has account?</p>
+                <p className="py-3 text-gray-400">New to Netflix?</p>
                 <button
                   onClick={() => navigate("/Signup")}
                   className="font-semibold text-white"
                 >
-                  login now
+                  Sign Up now
                 </button>
               </div>
               <div className="text-sm">
@@ -134,11 +141,12 @@ const Login = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+          <Toaster />
+        </section>
+      </main>
       <Footer />
     </>
   );
 };
 
-export default Login;
+export default Signup;
