@@ -1,22 +1,46 @@
 import React from "react";
 import Footer from "./Home/Footer";
 import logo from "../assets/logo.png";
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { app } from "../Auth/Firebase";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
+import { useDispatch } from "react-redux";
+import { adduser } from "@/redux/slices/user";
 
 const Login = () => {
+  const Dispatch=useDispatch()
   const auth = getAuth(app);
+  const Googleprovider = new GoogleAuthProvider();
   const { toast } = useToast();
 
   const navigate = useNavigate();
   const [show, setshow] = useState(true);
-  const [errorbox, seterrorbox] = useState("");
+  const [user, setuser] = useState(null);
   const [cheack, setcheack] = useState(true);
   const [credentials, setcredentials] = useState({ email: "", password: "" });
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/Movies")
+        Dispatch(adduser(user))
+        console.log(user)
+      } else {
+        setuser(null);
+      }
+    });
+  });
+
+
 
   const onchange = (e) => {
     setcredentials({
@@ -24,6 +48,7 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
+
   const handlesubmit = async (e) => {
     e.preventDefault();
     createUserWithEmailAndPassword(
@@ -32,18 +57,20 @@ const Login = () => {
       credentials.password
     )
       .then((res) => {
-        console.log(res);
         toast({
-          description: "Account created succesfuly",
+          description: "Account created succesfuly ,please login",
         });
       })
       .catch((err) => {
-        console.log(err);
         toast({
           variant: "destructive",
           description: err.code,
         });
       });
+  };
+
+  const handleContinueWithGoogle = () => {
+    signInWithPopup(auth, Googleprovider);
   };
 
   const handleshow = () => {
@@ -71,7 +98,6 @@ const Login = () => {
         <div className="bg w-full h-full  flex flex-col items-center  bg-[rgba(0,0,0,0.7)] border-b border-gray-600 pb-[20%] ">
           <div className=" boxxx w-full lg:w-[30%] h-[70%] lg:h-screen bg-black lg:bg-[rgba(0,0,0,0.7)]">
             <div className=" main box__ p-5 lg:p-[15%]">
-              <h1 className="text-white font-bold text-xl">{errorbox}</h1>
               <h1 className=" text-white font-bold text-3xl">
                 Create an Account
               </h1>
@@ -115,6 +141,15 @@ const Login = () => {
               >
                 <button className="text-center text-white font-bold  ">
                   Sign Up
+                </button>
+              </div>
+              {/* sign up with google */}
+              <div
+                onClick={handleContinueWithGoogle}
+                className=" bg-[#e50914] mt-[4%] text-center w-full rounded-md py-4 h-full"
+              >
+                <button className="text-center text-white font-bold  ">
+                  Continue with Google
                 </button>
               </div>
 

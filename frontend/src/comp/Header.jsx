@@ -27,6 +27,7 @@ const Header = () => {
   const likedmovies = useSelector(
     (state) => state.likedmovie_reducer.movieslist
   );
+  const user = useSelector((state) => state.user_reducer.user);
 
   const navigate = useNavigate();
   const logout = () => {
@@ -59,10 +60,13 @@ const Header = () => {
                         <span>to add movies.</span>
                       </div>
                     ) : (
-                      <div className=" scrollbar-hide overflow-y-scroll overflow-x-hidden h-[40rem] p-14 w-full">
+                      <div className=" scrollbar-hide overflow-y-scroll overflow-x-hidden h-[30rem] p-14 w-full">
                         {likedmovies.map((movie) => {
                           return (
-                            <main id={movie.id} className=" w-full my-5 overflow-hidden rounded-xl">
+                            <main
+                              id={movie.id}
+                              className=" w-full my-5 overflow-hidden rounded-xl"
+                            >
                               <div className=" w-full h-[5rem]">
                                 <img
                                   className=" w-full h-fit"
@@ -75,7 +79,7 @@ const Header = () => {
                             flex "
                               >
                                 <img
-                                  className="h-[15rem] rounded-lg"
+                                  className="h-[10rem] rounded-lg"
                                   src={`https://image.tmdb.org/t/p/w500/${movie.poster}`}
                                   alt=""
                                 />
@@ -152,7 +156,8 @@ const Header = () => {
 
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <img className="w-[2rem]" src={profile} alt="" />
+                
+                <img className="w-[2rem] rounded-full" src={user.photoURL} alt="" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
