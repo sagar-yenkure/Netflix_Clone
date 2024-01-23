@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import profile from "../assets/profile.png";
+import profile from "../assets/profile.png"
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { IoMdHeartEmpty } from "react-icons/io";
@@ -21,18 +21,27 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { removeliked } from "@/redux/slices/Likedmovies";
+import {app} from "../Auth/Firebase"
+import { getAuth ,signOut } from "firebase/auth";
+import { adduser } from "@/redux/slices/user";
+
 
 const Header = () => {
+  const Dispatch =useDispatch()
+  const {auth}=getAuth(app)
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const likedmovies = useSelector(
     (state) => state.likedmovie_reducer.movieslist
   );
   const user = useSelector((state) => state.user_reducer.user);
 
-  const navigate = useNavigate();
+
   const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
+    Dispatch(adduser(null))
+    localStorage.removeItem("accesstoken")
+    navigate("/")
+
   };
 
   return (
@@ -157,7 +166,7 @@ const Header = () => {
             <DropdownMenu>
               <DropdownMenuTrigger>
                 
-                <img className="w-[2rem] rounded-full" src={user.photoURL} alt="" />
+                <img className="w-[2rem]" src={!user?profile:user.photoURL} alt="" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>

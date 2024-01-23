@@ -32,6 +32,7 @@ const Signup = () => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, info.email, info.password)
       .then((res) => {
+        localStorage.setItem("accesstoken",res.user.accessToken)
         navigate("/Movies");
       })
       .catch((err) => {

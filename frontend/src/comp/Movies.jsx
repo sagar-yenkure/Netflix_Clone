@@ -3,8 +3,9 @@ import Corosole from "./Corosole";
 import Banner from "./Banner";
 import Moviecontext from "../context/Movie/context";
 import Footer from "./Home/Footer";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 const Movies = () => {
+  const navigate=useNavigate()
   const context = useContext(Moviecontext);
   const {
     moviedata,
@@ -16,6 +17,9 @@ const Movies = () => {
   } = context;
 
   useEffect(() => {
+    if(!localStorage.getItem("accesstoken")){
+      navigate("/login")
+    }
     moviefetch();
   }, []);
 

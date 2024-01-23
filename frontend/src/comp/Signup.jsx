@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { adduser } from "@/redux/slices/user";
 
 const Login = () => {
-  const Dispatch=useDispatch()
+  const Dispatch = useDispatch();
   const auth = getAuth(app);
   const Googleprovider = new GoogleAuthProvider();
   const { toast } = useToast();
@@ -28,19 +28,17 @@ const Login = () => {
   const [cheack, setcheack] = useState(true);
   const [credentials, setcredentials] = useState({ email: "", password: "" });
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate("/Movies")
-        Dispatch(adduser(user))
-        console.log(user)
-      } else {
-        setuser(null);
-      }
-    });
-  });
-
-
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       navigate("/Login")
+  //       Dispatch(adduser(user))
+  //       console.log(user)
+  //     } else {
+  //       setuser(null);
+  //     }
+  //   });
+  // });
 
   const onchange = (e) => {
     setcredentials({
@@ -57,9 +55,11 @@ const Login = () => {
       credentials.password
     )
       .then((res) => {
+        console.log(res);
         toast({
           description: "Account created succesfuly ,please login",
         });
+        setcredentials({ email: "", password: "" });
       })
       .catch((err) => {
         toast({
@@ -70,7 +70,16 @@ const Login = () => {
   };
 
   const handleContinueWithGoogle = () => {
-    signInWithPopup(auth, Googleprovider);
+    signInWithPopup(auth, Googleprovider)
+      .then((res) => {
+        console.log(res);
+        Dispatch(adduser(res.user));
+        localStorage.setItem("accesstoken", res.user.accessToken);
+        navigate("/movies");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleshow = () => {
