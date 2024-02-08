@@ -28,18 +28,6 @@ const Login = () => {
   const [cheack, setcheack] = useState(true);
   const [credentials, setcredentials] = useState({ email: "", password: "" });
 
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       navigate("/Login")
-  //       Dispatch(adduser(user))
-  //       console.log(user)
-  //     } else {
-  //       setuser(null);
-  //     }
-  //   });
-  // });
-
   const onchange = (e) => {
     setcredentials({
       ...credentials,

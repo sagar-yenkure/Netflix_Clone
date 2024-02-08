@@ -11,8 +11,9 @@ import Questions from "./Home/Questions";
 import Footer from "./Home/Footer";
 import HQuestion from "./Home/HQuestion";
 import Hfooter from "./Home/Hfooter";
+import Loading from "./Loading";
 
-export const Landing = () => {
+const Landing = () => {
   const context = useContext(LangContext);
   const { language } = context;
   return (
@@ -25,6 +26,9 @@ export const Landing = () => {
       <Fourth />
       {!language ? <Questions /> : <HQuestion />}
       {!language ? <Footer /> : <Hfooter />}
+      <Loading/>
     </>
   );
 };
+
+export default Landing
